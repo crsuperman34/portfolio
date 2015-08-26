@@ -768,11 +768,17 @@ a.btn-danger {
 
 .ontop {
   position:fixed;
-  bottom:25px;
+  bottom:0;
   z-index:100;
   span.btn {
+    width:110%;
     box-shadow:5px 5px 5px rgba(0,0,0,.5);
     cursor:default;
+    border-radius:0;
+    border-top-right-radius: 6px;
+    a:nth-child(1) {
+      margin-left:10%;
+    }
     a {margin-right:10px; cursor:pointer;}
     a, a i {color:white; transition:color .25s ease;}
     a:hover i, a:hover {
