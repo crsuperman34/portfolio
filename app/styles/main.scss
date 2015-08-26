@@ -8,6 +8,13 @@ $icon-font-path: '../fonts/';
 // endbower
 @import 'bower_components/flat-ui-sass/vendor/assets/stylesheets/flat-ui.scss';
 
+
+$o: #ff8d27;
+$t: #88d3cf;
+$g: #d9d9d9;
+$h: #1ABC9C;
+
+
 .container-fluid {
   padding:0;
 }
@@ -121,11 +128,12 @@ padding-left:10px;
   float:left;
   display:block;
   margin-bottom:0;
-  margin-top:16px;
+  margin-top:8px;
   }
   .tag {
     clear:left;
     display:block;
+    line-height:16px;
     float:left;
     font-size:12px;
     font-family:Inconsolata;
@@ -133,7 +141,7 @@ padding-left:10px;
     margin-right:12px;
   }
   .tag2 { 
-    margin-top:26px;
+    margin-top:12px;
   }
   .tag1 {
     margin-top:0;
@@ -142,10 +150,15 @@ padding-left:10px;
 nav {
   margin-top:22px;
 }
+
 .navbar-nav > li > a {
   line-height:10px;
+  padding:15px 0;
 }
 
+.navbar-nav > li:nth-child(1) > a {
+  padding:15px 42px;
+}
 .header ul li a i {
   margin-left:10px;
   line-height:10px;
@@ -153,6 +166,9 @@ nav {
 }
 .navbar {
   min-height:40px;
+  li.icon {
+    width:32px;
+  }
 }
 
 .navbar-nav [class^="fui-"] {
@@ -170,6 +186,12 @@ margin-left:10px;
     opacity:.9;
 
 }
+.fp-prev a, .fp-next a {
+  color:white;
+}
+.fp-prev a:hover, .fp-next a:hover {
+  color:$h;
+} 
 .fp-prev {margin-left:90px;
   span {margin-left:11px;}
 }
@@ -393,13 +415,14 @@ transition:all 800ms ease;
     background:white;
     box-shadow:10px 10px 20px;
   h1 {
-    display:inline-block;
+    display:block;
     margin-top:10px;
     float:left;
     color:#5d5d5d;
     font-size:32px; 
     span {
-    margin-left:10px;
+
+    display:block;
     color:black;
     font-size:20px;
     }
@@ -693,25 +716,9 @@ div.sd-mockup {
     width:100%;
   }
 }
-.social {
-div {
-  margin-top:10%;
-  text-align:center;
-  i {
-    color:#d25625;
-    font-size:2000%;
-  }
-}
-.fa-facebook-square {
-  margin-right:10%;
-}
-}
-.email {
-  margin-top:5%;
-  text-align:center;
-  font-size:500%;
 
-}
+
+
 a.color {
     color:#d25625;
     font-family: Inconsolata;
@@ -756,5 +763,20 @@ a.btn-danger {
   }
   .svg {
     font-size:30px;
+  }
+}
+
+.ontop {
+  position:fixed;
+  bottom:25px;
+  z-index:100;
+  span.btn {
+    box-shadow:5px 5px 5px rgba(0,0,0,.5);
+    cursor:default;
+    a {margin-right:10px; cursor:pointer;}
+    a, a i {color:white; transition:color .25s ease;}
+    a:hover i, a:hover {
+      color:$h;
+    }
   }
 }
