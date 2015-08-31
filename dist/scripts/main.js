@@ -28,7 +28,7 @@ $(document).ready(function() {
 
       if (slideAnchor === 'css') {
         $('div.slide[data-anchor="css"] h1').css({'opacity': '1', 'margin-top': '50px'});
-        $('div.slide[data-anchor="css"] h2').css({'opacity': '1', 'margin-left': '30%', 'transition-delay': '200ms'});
+        $('div.slide[data-anchor="css"] h2').css({'opacity': '1', 'margin-top': '0', 'margin-left': '30%', 'transition-delay': '200ms'});
       }
 
       if (slideAnchor === 'gt') {
