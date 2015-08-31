@@ -1,8 +1,8 @@
 $(document).ready(function() {
   pepit();
   $('#fullpage').fullpage({
-    'anchors':['home', 'ux', 'webdesign', 'appdesign', 'contact'],
-    'sectionsColor' : ['#28384C', '#ff8d27', '#fff', '#88d3cf', '#d9d9d9'],
+    'anchors':['home', 'ux', 'webdesign', 'appdesign'],
+    'sectionsColor' : ['#28384C', '#ff8d27', '#fff', '#88d3cf'],
     'loopBottom': true,
     'verticalCentered': false,
     'fixedElements': '#fixed',
@@ -76,12 +76,12 @@ $(document).ready(function() {
     
     'afterLoad': function(anchorLink, index){
       if (anchorLink == 'home'){
-        $('#fixed').hide();
+        $('#fixed, .ontop').hide();
         $('div.slide[data-anchor="css"] h1').css({'opacity':'1','margin-top':'50px', 'transition-delay':'400ms'});
         $('div.slide[data-anchor="css"] h2').css({'opacity':'1','margin-left':'30%','transition-delay':'600ms'});
       }
       else {
-        $('#fixed').show();
+        $('#fixed, .ontop').show();
       }
       if (anchorLink == 'ux') {
         $('.mb-images'). css({'opacity':'1','transform':'translateY(0px)'});
@@ -99,10 +99,10 @@ $(document).ready(function() {
     }
   })
   
-  $('.fp-controlArrow.fp-next').html('<span class="fui-arrow-right"></span>');
-  
-  $('.fp-controlArrow.fp-prev').html('<span class="fui-arrow-left"></span>');
+  $('.fp-controlArrow.fp-next').html('<a><span class="fui-arrow-right"></span></a>');
 
+  
+  $('.fp-controlArrow.fp-prev').html('<a><span class="fui-arrow-left"></span></a>');
 });
 
 function pepit() {
