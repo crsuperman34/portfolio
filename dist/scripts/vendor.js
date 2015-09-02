@@ -11766,7 +11766,8 @@ b){a.originalEvent.touches.length&&(A=a.originalEvent.touches[0].pageY)});b.bind
     startPos:                       {
         left:                           null,
         top:                            null
-    }
+    },
+    useBoundingClientRect:          false
   };
 
   //  ---------------------------------
@@ -11790,9 +11791,9 @@ b){a.originalEvent.touches.length&&(A=a.originalEvent.touches[0].pageY)});b.bind
     this.$body      = this.$document.find('body');
 
     //  Create our triggers based on touch/click device
-    this.moveTrigger        = "MSPointerMove touchmove mousemove";
-    this.startTrigger       = "MSPointerDown touchstart mousedown";
-    this.stopTrigger        = "MSPointerUp touchend mouseup";
+    this.moveTrigger        = "MSPointerMove pointermove touchmove mousemove";
+    this.startTrigger       = "MSPointerDown pointerdown touchstart mousedown";
+    this.stopTrigger        = "MSPointerUp pointerup touchend mouseup";
     this.startTriggerArray  = this.startTrigger.split(' ');
     this.moveTriggerArray   = this.moveTrigger.split(' ');
     this.stopTriggerArray   = this.stopTrigger.split(' ');
@@ -11854,8 +11855,9 @@ b){a.originalEvent.touches.length&&(A=a.originalEvent.touches[0].pageY)});b.bind
     this.onStartEvent = function(ev){ self.handleStart(ev); };
     this.$el.on(this.startTrigger, this.onStartEvent);
 
-    // Prevent start events from being gobbled by elements that should allow user interaction
-    this.onStartEventOnElementsWithInteraction = function(ev){ ev.stopPropagation(); };
+    // Add a flag to events that start on elements that should allow interaction
+    // so handleStart() can ignore them but allow them to bubble up through the DOM
+    this.onStartEventOnElementsWithInteraction = function(ev){ ev.ignorePropagation = true; };
     this.$el.on(
       this.startTrigger,
       this.options.elementsWithInteraction,
@@ -11886,6 +11888,11 @@ b){a.originalEvent.touches.length&&(A=a.originalEvent.touches[0].pageY)});b.bind
   //    once this.startTrigger occurs, handle all of the logic
   //    that must go on. This is where Pep's heavy lifting is done.
   Pep.prototype.handleStart = function(ev) {
+
+    // ignorePropagation is set to true if the event originates from an element
+    // listed in this.options.elementsWithInteraction
+    if (ev.ignorePropagation) return;
+
     var self = this;
 
             // only continue chugging if our start event is a valid move event.
@@ -12014,6 +12021,9 @@ b){a.originalEvent.touches.length&&(A=a.originalEvent.touches[0].pageY)});b.bind
               this.options.start.call(this, this.startEvent, this);
             }
 
+            // Move before calculate position and fire events
+            this.doMoveTo(dx, dy);
+
             // Calculate our drop regions
             if ( this.options.droppable ) {
               this.calculateActiveDropRegions();
@@ -12031,8 +12041,6 @@ b){a.originalEvent.touches.length&&(A=a.originalEvent.touches[0].pageY)});b.bind
             this.log({ type: 'event', event: ev.type });
             this.log({ type: 'event-coords', x: this.ev.x, y: this.ev.y });
             this.log({ type: 'velocity' });
-
-            this.doMoveTo(dx, dy);
   };
 
   Pep.prototype.doMoveTo = function(dx, dy) {
@@ -12208,7 +12216,14 @@ b){a.originalEvent.touches.length&&(A=a.originalEvent.touches[0].pageY)});b.bind
   Pep.prototype.normalizeEvent = function(ev) {
       ev.pep        = {};
 
-      if ( this.isPointerEventCompatible() || !this.isTouch(ev) ) {
+      if ( this.isTouch(ev) ) {
+
+        ev.pep.x      = ev.originalEvent.touches[0].pageX;
+        ev.pep.y      = ev.originalEvent.touches[0].pageY;
+        ev.pep.type   = ev.type;
+
+      }
+      else if ( this.isPointerEventCompatible() || !this.isTouch(ev) ) {
 
         if ( ev.pageX  ) {
           ev.pep.x      = ev.pageX;
@@ -12221,13 +12236,8 @@ b){a.originalEvent.touches.length&&(A=a.originalEvent.touches[0].pageY)});b.bind
         ev.pep.type   = ev.type;
 
       }
-      else {
-        ev.pep.x      = ev.originalEvent.touches[0].pageX;
-        ev.pep.y      = ev.originalEvent.touches[0].pageY;
-        ev.pep.type   = ev.type;
-      }
 
-       return ev;
+      return ev;
    };
 
   // resetVelocityQueue()
@@ -12370,7 +12380,9 @@ b){a.originalEvent.touches.length&&(A=a.originalEvent.touches[0].pageY)});b.bind
       this.moveToUsingTransforms(-this.xTranslation(),-this.yTranslation());
     }
 
-    this.moveTo(this.initialPosition.left, this.initialPosition.top);
+    if (this.options.place) {
+      this.moveTo(this.initialPosition.left, this.initialPosition.top);
+    }
   };
 
   //  requestAnimationFrame();
@@ -12528,8 +12540,8 @@ b){a.originalEvent.touches.length&&(A=a.originalEvent.touches[0].pageY)});b.bind
     } else if ( typeof this.options.constrainTo === 'string' ) {
       lowerXLimit       = 0;
       lowerYLimit       = 0;
-      upperXLimit       = this.$container.width()  - this.$el.outerWidth();
-      upperYLimit       = this.$container.height() - this.$el.outerHeight();
+      upperXLimit       = this.$container.width()  - (this.options.useBoundingClientRect ? this.$el[0].getBoundingClientRect().width : this.$el.outerWidth());
+      upperYLimit       = this.$container.height() - (this.options.useBoundingClientRect ? this.$el[0].getBoundingClientRect().height : this.$el.outerHeight());
 
       // is our object trying to move outside lower X & Y limits?
       if ( this.pos.x + dx < 0 )              hash.x = 0;
