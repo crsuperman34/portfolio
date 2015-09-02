@@ -226,7 +226,7 @@ div.slide[data-anchor="css"] {
     width:375px;
     display:block;
     float:left;
-    margin-left:25%;
+    margin-top:0;
     clear:both;
     text-shadow:5px 5px 5px #000;
     transition:all 200ms ease;
@@ -340,27 +340,19 @@ div.phones {
 
 .fp-slide[data-anchor="print"] {
   div.images {
-    float: none;
-    position: absolute;
+    float: left;
     z-index: 1;
-    margin-left: 12%;
-    width:50%;
     img {
 
     }
   }
   div.headings {
-    float: none;
-    position: absolute;
-    z-index: 5;
-    width:50%;
     h1 {
+      display:block;
       float:left;
       position:relative;
       margin-top:0;
-      margin-left:2%;
       font-family:inconsolata;
-      line-height:100px;
       color:white;
       font-size:75px;
       text-shadow:5px 5px 5px #000;
@@ -368,10 +360,11 @@ div.phones {
       opacity:0;
     }
     h2 {
+      display:block;
       float:left;
       position:relative;
+      margin-top:0;
       clear:both;
-      margin-left:4%;
       font-family:inconsolata;
       font-size:35px;
       line-height:45px;
@@ -444,21 +437,21 @@ transition:all 800ms ease;
 
 }
 
-@media (max-width:3000px) {
+@media (max-width:2000px) {
   #section0 {
-    background-position:0px -50px;
+    background-position:0px 0px;
   }
 }
 
-@media (max-width:1600px) {
+@media (max-width:1440px) {
   #section0 {
-    background-position:0px 150px;
+    background-position:0px 90px;
   }
 }
 
 @media (max-width:1200px) {
   #section0 {
-    background-position:0px 250px;
+    background-position:0px 180px;
   }
 }
 
@@ -470,12 +463,12 @@ transition:all 800ms ease;
 
 @media (max-width:768px) {
   #section0 {
-    background-position:-200px 250px;
+    background-position:-400px 200px;
   }
 
   @media (max-width:450px) {
   #section0 {
-    background-position:-400px 250px;
+    background-position:-500px 200px;
   }
 }
 }

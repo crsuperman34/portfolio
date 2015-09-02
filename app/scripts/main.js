@@ -51,7 +51,7 @@ $(document).ready(function() {
         $('.two').css({'opacity': '1', 'margin-top': '-330px', 'transition-delay': '200ms'});
 
         $('div.headings h1').css('opacity', '1');
-        $('div.headings h2').css({'opacity': '1', 'transition-delay': '200ms'});
+        $('div.headings h2').css({'opacity': '1', 'margin-top': '-200px', 'transition-delay': '200ms'});
 
       }
     },
