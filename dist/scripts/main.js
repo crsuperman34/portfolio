@@ -21,6 +21,9 @@ $(document).ready(function() {
     'fixedElements': '#fixed',
     'touchSensitivity': 5,
     'normalScrollElements': '.mb-images',
+    'fitToSection': true,
+    'paddingTop': 0,
+    'paddingBottom': 0,
 
     'afterSlideLoad': function(anchorLink, index, slideAnchor) {
 
@@ -111,6 +114,7 @@ $(document).ready(function() {
 
 $('.fp-controlArrow.fp-next').html('<a><span class="fui-arrow-right"></span></a>');
 $('.fp-controlArrow.fp-prev').html('<a><span class="fui-arrow-left"></span></a>');
+$.fn.fullpage.reBuild();
 });
 /*$('.pep2').pep({
   useCSSTranslation: false,
